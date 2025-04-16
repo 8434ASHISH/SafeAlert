@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeAlert</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f0e6d2;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            border: 3px solid #ff4500;
+            padding: 20px;
+            background-color: #fffaf0;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .header {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff4500;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header img {
+            width: 50px;
+            margin-left: 10px;
+        }
+        .tagline {
+            font-size: 1em;
+            color: #228b22;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        .button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #000;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s, background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .user-btn { background-color: #ff69b4; color: #fff; }
+        .emergency-btn { background-color: #ff6347; color: #fff; }
+        .accident-btn { background-color: #ffd700; color: #000; }
+        .location-btn { background-color: #4682b4; color: #fff; }
+        .sms-btn { background-color: #32cd32; color: #fff; }
+        .language-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #ff4500;
+            transition: transform 0.3s;
+        }
+        .language-switch:hover {
+            transform: rotate(360deg);
+        }
+        .profile-form {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fffaf0;
+            padding: 20px;
+            border: 2px solid #ff4500;
+            border-radius: 15px;
+            z-index: 10;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .profile-form.active {
+            display: block;
+        }
+        #status {
+            margin-top: 10px;
+            color: #ff4500;
+            font-weight: bold;
+        }
+        @media (max-width: 480px) {
+            .container { padding: 10px; }
+            .header { font-size: 2em; }
+            .button { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switch" onclick="toggleLanguage()">🌐</div>
+    <div class="container">
+        <div class="header"><span>SafeAlert</span><img src="https://img.icons8.com/ios-filled/50/ffffff/ambulance.png" alt="Ambulance"></div>
+        <div class="tagline">Apki Suraksha Hamara Imaan! 🇮🇳</div>
+
+        <button class="button user-btn" onclick="toggleProfileForm()">👤 User Profile</button>
+        <button class="button emergency-btn" onclick="setEmergencyContact()">🚨 Set Emergency Contact</button>
+        <button id="startDetectionBtn" class="button accident-btn" onclick="toggleDetection()">⚠️ Start Detection</button>
+        <button id="stopDetectionBtn" class="button accident-btn" style="display: none;" onclick="stopDetection()">⚠️ Stop Detection</button>
+        <button class="button location-btn" onclick="showLocation()">📍 Live Location</button>
+        <button class="button sms-btn" onclick="sendSMSAlert()">💬 SMS Alert</button>
+        <div id="status"></div>
+
+        <!-- Profile Form Popup -->
+        <div id="profileForm" class="profile-form">
+            <h3 class="text-lg font-bold mb-4 text-ff4500">Profile Details</h3>
+            <input type="text" id="userName" placeholder="Name" class="w-full p-2 mb-2 border border-ff4500 rounded">
+            <input type="text" id="bloodGroup" placeholder="Blood Group (Optional)" class="w-full p-2 mb-2 border border-ff4500 rounded">
+            <input type="text" id="userContact" placeholder="Contact Number" class="w-full p-2 mb-2 border border-ff4500 rounded">
+            <input type="text" id="userPlace" placeholder="Place" class="w-full p-2 mb-2 border border-ff4500 rounded">
+            <input type="email" id="userEmail" placeholder="Email" class="w-full p-2 mb-2 border border-ff4500 rounded">
+            <button onclick="saveProfile()" class="button emergency-btn mt-2">Save</button>
+            <button onclick="closeProfileForm()" class="button accident-btn mt-2">Close</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Privacy Policy:</strong> Your data is secure and used only for emergency purposes.</p>
+        <p><strong>Disclaimer:</strong> This app is for informational use only. Not a substitute for professional help.</p>
+        <p><strong>About Us:</strong> SafeAlert is developed to ensure your safety with love and care.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
